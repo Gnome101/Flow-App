@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "lib/openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "lib/openzeppelin-contracts/contracts/access/Ownable.sol";
 
 /**
  * @title PlayerNFT
@@ -21,7 +21,7 @@ contract PlayerNFT is ERC721URIStorage, Ownable {
         uint8 shootingProbability
     );
 
-    constructor() ERC721("BasketballPlayer", "BPLR") {}
+    constructor() ERC721("BasketballPlayer", "BPLR") Ownable(msg.sender) {}
 
     /**
      * @dev Function to mint a new Player NFT.
@@ -57,7 +57,7 @@ contract PlayerNFT is ERC721URIStorage, Ownable {
         uint256 tokenId,
         uint8 newProbability
     ) external onlyOwner {
-        require(_exists(tokenId), "Player does not exist");
+        require(_ownerOf(tokenId) != address(0), "Player does not exist");
         require(
             newProbability > 0 && newProbability <= 100,
             "Invalid shooting probability"
