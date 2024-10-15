@@ -2,12 +2,12 @@
 pragma solidity ^0.8.20;
 
 import "forge-std/Test.sol";
-import "../src/CoinToss.sol";
+import "../src/ShootOff.sol";
 import "../src/PlayerNFT.sol";
 
 contract CoinTossTest is Test {
     PlayerNFT private playerNFT;
-
+    ShootOff private shootOff;
     address private cadenceArch = 0x0000000000000000000000010000000000000001;
     uint64 mockFlowBlockHeight = 12345;
     address user = makeAddr("user");

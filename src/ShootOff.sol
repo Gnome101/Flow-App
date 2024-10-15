@@ -8,7 +8,7 @@ import {PlayerNFT} from "./PlayerNFT.sol";
  * @dev This contract is a simple coin toss game where users can place win prizes by flipping a coin as a demonstration
  * of safe usage of Flow EVM's native secure randomness.
  */
-contract CoinToss is CadenceRandomConsumer {
+contract ShootOff is CadenceRandomConsumer {
     PlayerNFT public PlayerContract;
 
     constructor(address _playerContract) {
