@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.20;
 
 import "forge-std/Test.sol";
 import "../src/CoinToss.sol";
@@ -17,9 +17,21 @@ contract CoinTossTest is Test {
         playerNFT = new PlayerNFT();
     }
 
-    function testMint() public {
+    function testFuzz_Mint(address x) public {
         uint256 nextID = playerNFT.nextTokenId();
-        playerNFT.mintPlayer(user, 1, "test");
-        assertEq(playerNFT.ownerOf(nextID), user);
+        uint256 gasAmountBefore = gasleft();
+        playerNFT.mintPlayer(x, 1, "test");
+        uint256 gasAmountAfter = gasleft();
+
+        assertEq(playerNFT.ownerOf(nextID), x);
+        console.log("Gas Spent:", gasAmountBefore - gasAmountAfter);
+    }
+
+    function testGame() public {
+        address user1 = makeAddr("user1");
+        address user2 = makeAddr("user2");
+
+        playerNFT.mintPlayer(user1, 40, "Jordan");
+        playerNFT.mintPlayer(user2, 35, "Lebron");
     }
 }
