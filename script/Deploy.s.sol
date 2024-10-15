@@ -1,20 +1,25 @@
-// // SPDX-License-Identifier: MIT
-// pragma solidity 0.8.19;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
 
-// import {CoinToss} from "../src/CoinToss.sol";
-// import {Script} from "forge-std/Script.sol";
+import {ShootOff} from "../src/ShootOff.sol";
+import {Script} from "forge-std/Script.sol";
+import {PlayerNFT} from "../src/PlayerNFT.sol";
 
-// contract DeployCadenceRandomConsumer is Script {
-//     CoinToss private coinToss;
+contract DeployCadenceRandomConsumer is Script {
+    ShootOff private shootOff;
 
-//     function deploy() public {
-//         coinToss = new CoinToss();
-//     }
+    PlayerNFT private playerNFt;
 
-//     function run() public payable {
-//         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
-//         vm.startBroadcast(deployerPrivateKey);
-//         deploy();
-//         vm.stopBroadcast();
-//     }
-// }
+    //0001fadwadadwa
+    function deploy() public {
+        playerNFt = new PlayerNFT();
+        shootOff = new ShootOff(address(playerNFt));
+    }
+
+    function run() public payable {
+        uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+        vm.startBroadcast(deployerPrivateKey);
+        deploy();
+        vm.stopBroadcast();
+    }
+}

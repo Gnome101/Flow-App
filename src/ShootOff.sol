@@ -3,6 +3,7 @@ pragma solidity ^0.8.20;
 
 import {CadenceRandomConsumer} from "./CadenceRandomConsumer.sol";
 import {PlayerNFT} from "./PlayerNFT.sol";
+import {console} from "forge-std/Test.sol";
 
 /**
  * @dev This contract is a simple coin toss game where users can place win prizes by flipping a coin as a demonstration
@@ -46,7 +47,7 @@ contract ShootOff is CadenceRandomConsumer {
     uint256 player2;
     uint256 requestId;
 
-    uint256 winner;
+    uint256 public winner;
 
     function joinGame(uint256 playerNFTID) public {
         require(PlayerContract.ownerOf(playerNFTID) == msg.sender, "Not Owner");
@@ -74,7 +75,7 @@ contract ShootOff is CadenceRandomConsumer {
             !_isNonZero(coinTosses[msg.sender]),
             "Must close previous coin flip before placing a new one"
         );
-
+        console.log("Here");
         // request randomness
         requestId = _requestRandomness();
         // insert the request ID into the coinTosses mapping
